@@ -8,11 +8,11 @@ public class YutService {
 	ProjectYDTO pro = new ProjectYDTO();
 	//
 	public void clearScreen() {
-		for (int i = 0; i < 25; i++)
+		for (int i = 0; i < 50; i++)
 			System.out.println("");
 	}
 	public String randomspace() {//윷가락의 위치를 변경하여 조금의 재미를 부여
-		int randoms = rd.nextInt(6);
+		int randoms = rd.nextInt(8);
 		String randomSpace = "";
 		for (int i = 0; i < randoms; i++) {
 			randomSpace = randomSpace + " ";
@@ -34,7 +34,7 @@ public class YutService {
 		System.out.println(randomyut + "  _______________");
 		System.out.println(randomyut + " |_B_____________|" + 2);
 	}
-	public int throwYut(String ch) {
+	public ProjectYDTO throwYut(String ch) {
 		String nowyutCnt = "";//4개 윷 투척 조합 점수 기록 변수
 		int nowPositionCnt = 0; //한번던질때 진행 하는 칸수
 		int sumPositionCnt = 0;
@@ -74,10 +74,14 @@ public class YutService {
 			nowMal = " => 빽~도 입니다. 행운이길~! ";
 		}
 		System.out.print("\n  " + nowyutCnt + " " + "참가자" + ch + "님" + nowMal);
-		System.out.println(ch + " 님 위치 점수는 -> " + sumPositionCnt + "입니다.");
+		System.out.println(ch + " 님 위치 점수는 -> " + sumPositionCnt + " 입니다.");
+		pro.setSumPositionCnt(sumPositionCnt);
 		if (nowPositionCnt == 4 || nowPositionCnt == 5) {
-			return 1;
+			pro.setRetryChkno(1);
+			
+			return pro;
 		}
-		return 0;
+		pro.setRetryChkno(0);
+		return pro;
 	}
 }

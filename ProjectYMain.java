@@ -7,15 +7,20 @@ public class ProjectYMain {
 		Scanner sc = new Scanner(System.in);
 		//
 		boolean play = false;
-		int gamecnt = 0;
+		int gamecntA = 0;
+		int gamecntB = 0;
 		System.out.println("먼저 하실분을 정하세요");
 		while (true) {
 			
 			System.out.println();
 			System.out.println("   ------- GAME START!-------");
-			System.out.println("   현재 윷을 던진 횟수는 "+gamecnt+"입니다.\n");
-			if (gamecnt == 10) {
-				System.out.println("무승부");
+			System.out.println("   현재 A의 위치는 "+gamecntA+"입니다.\n");
+			System.out.println("   현재 B의 위치는 "+gamecntB+"입니다.\n");
+			if (gamecntA >= 20) {
+				System.out.println("  축하합니다. 참가자 A 승리!!");
+				break;
+			}else if(gamecntB >=20) {
+				System.out.println("  축하합니다. 참가자 B 승리!!");
 				break;
 			}
 			if (play) {
@@ -26,19 +31,21 @@ public class ProjectYMain {
 			int menu = sc.nextInt();
 			if (menu == 1 && play == false) {
 				service.clearScreen();
-				gamecnt++;
-				if (service.throwYut("A") == 1) {
+				ProjectYDTO resultThrow = service.throwYut("A");
+				gamecntA= resultThrow.getSumPositionCnt();
+				if (resultThrow.getRetryChkno() == 1) {//윷이나 모가 나올경우  다시
 					continue;
 				}
-				play = true;
+				play = true;// turn 전환
 				continue;
 			} else if (menu == 2 && play == true) {
 				service.clearScreen();
-				gamecnt++;
-				if (service.throwYut("B") == 1) {
+				ProjectYDTO resultThrow = service.throwYut("B");
+				gamecntB= resultThrow.getSumPositionCnt();
+				if (resultThrow.getRetryChkno() == 1) {
 					continue;
 				}
-				play = false;
+				play = false;//turn 전환
 				continue;
 			} else {
 				System.out.println("다시입력");
