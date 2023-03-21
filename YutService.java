@@ -1,6 +1,7 @@
-package ProjectY.Yutpoject;
+package Yproject.Yutpoject;
 import java.util.Random;
 import java.util.Scanner;
+//
 public class YutService {
 	Scanner sc = new Scanner(System.in);
 	ProjectYRepository yr = new ProjectYRepository();
@@ -21,18 +22,18 @@ public class YutService {
 	}
 	public void Yut1() {
 		String randomyut = randomspace();
-		System.out.println(randomyut + "        _______________");
-		System.out.println(randomyut + "       |___X___X___X___|" + 1);
+		System.out.println(randomyut + "          _______________");
+		System.out.println(randomyut + "         |___X___X___X___|" + 1);
 	}
 	public void Yut2() {
 		String randomyut = randomspace();
-		System.out.println(randomyut + "        _______________");
-		System.out.println(randomyut + "       |_______________|" + 0);
+		System.out.println(randomyut + "          _______________");
+		System.out.println(randomyut + "         |_______________|" + 0);
 	}
 	public void Yut3() {
 		String randomyut = randomspace();
-		System.out.println(randomyut + "        _______________");
-		System.out.println(randomyut + "       |_B_____________|" + 2);
+		System.out.println(randomyut + "          _______________");
+		System.out.println(randomyut + "         |_B_____________|" + 2);
 	}
 	public void firstShowroad() {
 		clearScreen();
@@ -80,7 +81,7 @@ public class YutService {
 		System.out.println();
 		sumPositionCnt = yr.PositionCnt(nowPositionCnt, ch);// 진행하는 말의 위치값을 저장
 		ProjectYDTO cachM = yr.YboardRows(ch);// Road에 " 말 " 위치를 찍어주는 메소드
-		if (cachM.getRetryChkno()==1&&cachM.getPlayer().equals("A")) {
+		if (cachM.getRetryChkno() == 1 && cachM.getPlayer().equals("A")) {
 			yr.PositionCntreset("B");
 		} else {
 			yr.PositionCntreset("A");

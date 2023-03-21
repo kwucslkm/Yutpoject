@@ -1,4 +1,4 @@
-package ProjectY.Yutpoject;
+package Yproject.Yutpoject;
 
 abstract class EnheritanceParents {
 	int number1;

@@ -1,4 +1,4 @@
-package ProjectY.Yutpoject;
+package Yproject.Yutpoject;
 import java.util.HashMap;
 import java.util.Map;
 public class ProjectYRepository {
@@ -26,13 +26,13 @@ public class ProjectYRepository {
 	public void YboardColum() {
 	}
 	public ProjectYDTO YboardRows(String player) {
-		String boardO = "  o";
-		String boardA = "  A";
-		String boardB = "  B";
-		String boardAB = " A B";
-		System.out.println("\n\n");
-		System.out.println("                         * Death Road *");
-		System.out.println(" -----------------------------------------------------------------");
+		String boardO = " o ";
+		String boardA = " 'A'";
+		String boardB = " 'B'";
+		String boardAB = " 'A B'";
+		System.out.println("\n");
+		System.out.println("                             * Death Road *");
+		System.out.println(" ----------------------------------------------------------------------");
 		System.out.print(" ");
 		int catchM = 0; // 잡히는 상황 시 메시지 출력
 		if (poCntA == 0 && poCntB == 0) {
@@ -42,7 +42,7 @@ public class ProjectYRepository {
 				} else {
 					System.out.print(boardO);
 				}
-			}
+			}System.out.print("  GOAL!");
 		} else {
 			for (int i = 0; i <= 20; i = i + 1) {
 				if (i == poCntA && i == poCntB) {
@@ -63,11 +63,11 @@ public class ProjectYRepository {
 				} else {
 					System.out.print(boardO);
 				}
-			}
+			}System.out.print("  GOAL!");
 		}
-		System.out.println("\n -----------------------------------------------------------------");
+		System.out.println("\n ----------------------------------------------------------------------");
 		if (catchM == 1) {
-			System.out.println("앗 " + player + " 님 잡았습니다. 한번더");
+			System.out.println("   앗 " + player + " 님 잡았습니다. 한번더");
 		}
 		System.out.println();
 		prDTO.setPlayer(player);
