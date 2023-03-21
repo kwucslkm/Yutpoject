@@ -9,6 +9,7 @@ public class ProjectYMain {
 		boolean play = false;
 		int gamecntA = 0;
 		int gamecntB = 0;
+		System.out.println();
 		System.out.println("먼저 하실분을 정하세요");
 		System.out.println(" ------------------------ YUT GAME!!!!-----------------------------\n");
 		service.firstShowroad();

@@ -4,6 +4,7 @@ import java.util.Map;
 public class ProjectYRepository {
 	//
 	Map<Integer, ProjectYDTO> Ybmap = new HashMap<>();
+	ProjectYDTO prDTO = new ProjectYDTO();
 	int poCntA = 0;
 	int poCntB = 0;
 	public int PositionCnt(int nowcnt, String ch) {
@@ -13,9 +14,18 @@ public class ProjectYRepository {
 			return poCntB += nowcnt;
 		}
 	}
+	public int PositionCntreset(String play) {
+		if (play.equals("A")) {
+			poCntA = 0;
+			return poCntA;
+		} else {
+			poCntB = 0;
+			return poCntB;
+		}
+	}
 	public void YboardColum() {
 	}
-	public void YboardRows(String player) {
+	public ProjectYDTO YboardRows(String player) {
 		String boardO = "  o";
 		String boardA = "  A";
 		String boardB = "  B";
@@ -24,10 +34,10 @@ public class ProjectYRepository {
 		System.out.println("                         * Death Road *");
 		System.out.println(" -----------------------------------------------------------------");
 		System.out.print(" ");
-		boolean catchM = true; // 잡히는 상황 시 메시지 출력
+		int catchM = 0; // 잡히는 상황 시 메시지 출력
 		if (poCntA == 0 && poCntB == 0) {
-			for (int i = 0; i <= 40; i = i + 2) {
-				if ((i == (poCntA * 2)) && (i == (poCntB * 2))) {
+			for (int i = 0; i <= 20; i = i + 1) {
+				if (i == poCntA && i == poCntB) {
 					System.out.print(boardAB);
 				} else {
 					System.out.print(boardO);
@@ -35,13 +45,13 @@ public class ProjectYRepository {
 			}
 		} else {
 			for (int i = 0; i <= 20; i = i + 1) {
-				if ((i == (poCntA )) && (i == (poCntB ))) {
-//					if (player.equals("A")) {
-//						poCntB = 0;
-//					} else {
-//						poCntA = 0;
-//					}
-//					catchM = false;
+				if (i == poCntA && i == poCntB) {
+					if (player.equals("A")) {
+						poCntB = 0;
+					} else {
+						poCntA = 0;
+					}
+					catchM = 1;
 					System.out.print(boardAB);
 				} else if (poCntB < poCntA && i == poCntB) {
 					System.out.print(boardB);
@@ -55,10 +65,13 @@ public class ProjectYRepository {
 				}
 			}
 		}
-		if (!catchM) {
-			System.out.println("앗 잡았습니다.");
-		}
 		System.out.println("\n -----------------------------------------------------------------");
+		if (catchM == 1) {
+			System.out.println("앗 " + player + " 님 잡았습니다. 한번더");
+		}
 		System.out.println();
+		prDTO.setPlayer(player);
+		prDTO.setRetryChkno(catchM);
+		return prDTO;
 	}
 }
