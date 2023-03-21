@@ -1,4 +1,4 @@
-package Yproject;
+package ProjectY.Yutpoject;
 
 public class ProjectYDTO {
 	private int retryChkno;

@@ -1,4 +1,4 @@
-package Yproject;
+package ProjectY.Yutpoject;
 //import java.util.Random;
 import java.util.Scanner;
 public class ProjectYMain {
@@ -10,11 +10,14 @@ public class ProjectYMain {
 		int gamecntA = 0;
 		int gamecntB = 0;
 		System.out.println("먼저 하실분을 정하세요");
+		System.out.println(" ------------------------ YUT GAME!!!!-----------------------------\n");
+		service.firstShowroad();
 		while (true) {
 			
 			System.out.println();
-			System.out.println("   ------- GAME START!-------");
-			System.out.println("   현재 A의 위치는 "+gamecntA+"입니다.\n");
+			
+			
+			System.out.println("   현재 A의 위치는 "+gamecntA+"입니다.");
 			System.out.println("   현재 B의 위치는 "+gamecntB+"입니다.\n");
 			if (gamecntA >= 20) {
 				System.out.println("  축하합니다. 참가자 A 승리!!");
@@ -23,6 +26,7 @@ public class ProjectYMain {
 				System.out.println("  축하합니다. 참가자 B 승리!!");
 				break;
 			}
+			
 			if (play) {
 				System.out.println("  참가자 B press '2' enter> ");
 			} else {
@@ -51,6 +55,6 @@ public class ProjectYMain {
 				System.out.println("다시입력");
 			}
 		}
-		System.out.println(" 게임 테스트 종료");sc.close();
+		System.out.println("\n  게임 테스트 종료");sc.close();
 	}
 }
