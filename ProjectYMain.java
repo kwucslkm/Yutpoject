@@ -37,6 +37,7 @@ public class ProjectYMain {
 			System.out.println();// player의 점수를 출력 합니다.
 			//
 			if (gamecntA >= 20) {
+				service.ShowResult();
 				System.out.println("  축하합니다. 참가자 A 승리!!");
 				break;
 			} else if (gamecntB >= 20) {
