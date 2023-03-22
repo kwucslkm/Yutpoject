@@ -13,7 +13,6 @@ public class ProjectYRepository {
 		Ymap.put(prDTO.getTotalyutcnt(), proYDTO);
 	}
 	public Map<Integer, ProjectYDTO> remap() {
-		
 		return Ymap;
 	}
 	public void YboardColum() {
@@ -58,5 +57,8 @@ public class ProjectYRepository {
 		}
 		return nowMal;
 	}
-
+	public void deathroad1() {
+		System.out.println("\u001B[31m" + " ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"
+				+ "\u001B[0m");
+	}
 }

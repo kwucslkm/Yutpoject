@@ -9,12 +9,12 @@ public class YutService {
 	Random rd = new Random();// 랜덤 객체 생성
 	int poCntA = 0; // A누적 점수
 	int poCntB = 0; // B누적 점수
-	public void clearScreen() {
-		for (int i = 0; i < 80; i++)
+	public void clearScreen(int line) {
+		for (int i = 0; i < line; i++)
 			System.out.println("");
 	}
 	public void firstShowroad() {
-		clearScreen();
+		clearScreen(80);
 //		YboardRows("시작");
 	}
 	public int PositionSumCnt(int nowPositionCnt, String player) {// 누적 점수 저장 메소드
@@ -33,7 +33,8 @@ public class YutService {
 		int sumPositionCnt = 0; // 누적점수
 		int retryChk = 0; // 다시 윷 던지기 변수
 		String nowMal = "";//
-		System.out.println(" ______________________________YUT GAME !!______________________________\n");
+		System.out.println(" _______________________________YUT GAME !!_______________________________\n");
+		clearScreen(1);
 		for (int i = 0; i < 4; i++) {
 			if (rd.nextInt(2) == 1) {
 				nowyutCnt = nowyutCnt + "1";// 윷가락 코드를 따기위한
@@ -72,74 +73,65 @@ public class YutService {
 		sumPositionCnt = PositionSumCnt(nowPositionCnt, player);
 		proYDTO.setSumPositionCnt(sumPositionCnt);// DTO 에 누적카운트값 저장
 		prepository.save(proYDTO);// 맵리스트에 윷 한 번 던졌을때의 값들을 저장
-//		
-//		sumPositionCnt = prepository.PositionCnt(nowPositionCnt, player);// 진행하는 말의 위치값을 저장
-		//
-//		ProjectYDTO cachM = prepository.YboardRows(player);// Road에 " 말 " 위치를 찍어주는 메소드
-//		if (cachM.getRetryChkno() == 1 && cachM.getPlayer().equals("A")) {
-//			prepository.PositionCntreset("B");
-//		} else {
-//			prepository.PositionCntreset("A");
-//		}
+//
 		System.out.println("\n  " + nowyutCnt + " " + "참가자 " + player + "님" + nowMal);// 현재윷 던진 결과값을 출력
 		System.out.println("  " + player + " 님 위치 점수는 -> " + sumPositionCnt + " 입니다.");
-//		proYDTO.setSumPositionCnt(sumPositionCnt);
-//		if (nowPositionCnt == 4 || nowPositionCnt == 5) {
-//			proYDTO.setRetryChkno(1);
-//			return proYDTO;
-//		}
-//		proYDTO.setRetryChkno(0);
+//
 		YboardRows(proYDTO);
+		System.out.println(proYDTO);
 		return proYDTO;
 	}
 	public ProjectYDTO YboardRows(ProjectYDTO proYDTO) {
 		String boardO = " o ";
-		String boardA = " 'A'";
-		String boardB = " 'B'";
+		String boardA = "\u001B[32m 'A' \u001B[0m";
+		String boardB = "\u001B[33m 'B' \u001B[0m";
 		String boardAB = " 'A B'";
 		Map<Integer, ProjectYDTO> prDTO = prepository.remap();
 		System.out.println("\n");
 		System.out.println("                             * Death Road *");
-		System.out.println("\u001B[31m" + " ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"
-				+ "\u001B[0m");
+		prepository.deathroad1();// 데스로드 호출
 		System.out.print(" ");
 		int catchM = 0; // 잡히는 상황 시 메시지 출력
-		if (poCntA == 0 && poCntB == 0) {
-			for (int i = 0; i <= 20; i = i + 1) {
-				if (i == poCntA && i == poCntB) {
-					System.out.print(boardAB);
+		int goalNum = 20;
+//		
+		for (int i = 0; i <= goalNum; i = i + 1) {
+			if (i == poCntA && i == poCntB) { // 따라잡은 상황
+				if (proYDTO.getPlayer().equals("A")) {
+					poCntB = 0;
 				} else {
-					System.out.print(boardO);
+					poCntA = 0;
 				}
-			}
-			System.out.print("  GOAL!");
-		} else {
-			for (int i = 0; i <= 20; i = i + 1) {
-				if (i == poCntA && i == poCntB) {
-					if (proYDTO.getPlayer().equals("A")) {
-						poCntB = 0;
-					} else {
-						poCntA = 0;
-					}
-					catchM = 1;
-					System.out.print(boardAB);
-				} else if (poCntB < poCntA && i == poCntB) {
+				catchM = 1;
+				System.out.print(boardAB);
+			} else if (poCntB < poCntA && i == poCntB) {
+				System.out.print(boardB);
+			} else if (poCntB < poCntA && i == poCntA) {
+				System.out.print(boardA);
+			} else if (poCntB > poCntA && i == poCntA) {
+				System.out.print(boardA);
+			} else if (poCntB > poCntA && i == poCntB) {
+				System.out.print(boardB);
+			} else if(i==20) {
+				if(poCntA>=goalNum) {
+					System.out.print(boardA);
+					System.out.println();
+				}else if(poCntB>=goalNum) {
 					System.out.print(boardB);
-				} else if (poCntB < poCntA && i == poCntA) {
-					System.out.print(boardA);
-				} else if (poCntB > poCntA && i == poCntA) {
-					System.out.print(boardA);
-				} else if (poCntB > poCntA && i == poCntB) {
-				} else {
-					System.out.print(boardO);
+					System.out.println();
+				}else {
+					System.out.print("  GOAL!\n");
 				}
+				
+			} else {
+				System.out.print(boardO);
 			}
-			System.out.println("  GOAL!");
+				
 		}
-		System.out.println("\u001B[31m\n" + " ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"
-				+ "\u001B[0m");
+//		System.out.print("  GOAL!\n");
+		prepository.deathroad1();// 데스로드 호출
 		if (catchM == 1) {
 			System.out.println("   앗 " + proYDTO.getPlayer() + " 님 잡았습니다. 한번더");
+			proYDTO.setRetryChkno(1);
 		}
 		System.out.println();
 		return proYDTO;

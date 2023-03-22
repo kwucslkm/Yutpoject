@@ -9,13 +9,27 @@ public class ProjectYMain {
 		//
 		boolean play = false;// 참가자 순서를 바꿔 줄 변수
 		int gamecntA = 0;// A말의 점수를 저장 할 변수
-		int gamecntB = 0;// B말의 점수를 저장 할 변수		
+		int gamecntB = 0;// B말의 점수를 저장 할 변수
 		//
 		service.firstShowroad();// 처음0인 상태 로드 보드판을 출력합니다.
-		System.out.println("                20칸 GOAL에 먼저 도달 하시는 플레이어가 승립합니다. ");
-		System.out.println("                먼저 시작하실 분을 정하시고 참가자 A께서는 '1'을 눌러 시작하세요\n");
-		
-		System.out.println(" ■■■■■■■■■■■■■■■■■■■■■■■■■■■■ YUT GAME Start!!!!■■■■■■■■■■■■■■■■■■■■■■■■■■\n");
+		System.out.println(" _____________________________YUT GAME !!_____________________________\n");
+		service.clearScreen(14);
+		System.out.println("              20칸 GOAL에 먼저 도달 하시는 플레이어가 '승리' 합니다. ");
+		System.out.println("              먼저 시작하실 분을 정하시고 참가자 A께서는 '1'을 눌러 시작하세요\n");
+//		service.YboardRows();
+		System.out.println("\u001B[31m" + " ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"
+				+ "\u001B[0m");
+		for (int i = 0; i < 20; i = i + 1) {
+			if (i == 0) {
+				System.out.print(" 'AB' ");
+			}else {
+				System.out.print(" o ");
+			}
+		}
+		System.out.println("  Goal");
+		System.out.println("\u001B[31m" + " ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"
+				+ "\u001B[0m");
+		System.out.println(" ■■■■■■■■■■■■■■■■■■■■■■■■■ YUT GAME Start!!! ■■■■■■■■■■■■■■■■■■■■■■■■■\n");
 		while (true) {// palyer A 와 player B 번갈아 가며 윷을 던집니다.
 			System.out.println();// player의 점수를 출력 합니다.
 			System.out.println("   현재 A의 위치는 " + gamecntA + "입니다.");
@@ -34,7 +48,7 @@ public class ProjectYMain {
 				System.out.println("  참가자 A press '1' enter> ");
 			}
 			int menu = sc.nextInt();
-			service.clearScreen();
+			service.clearScreen(80);
 			if (menu == 1 && play == false) {
 				ProjectYDTO resultThrow = service.throwYut("A");// 윷을 던지는 메소드 호출 하여 DTO타입 변수에 리턴값을 담는다.
 				gamecntA = resultThrow.getSumPositionCnt();// A의 위치값을 받아 변수에 담는다.
@@ -50,11 +64,10 @@ public class ProjectYMain {
 					continue;
 				}
 				play = false;// turn 전환
-				continue;	
+				continue;
 			} else {
 				System.out.println("다시입력");
 			}
-			
 		}
 		System.out.println("\n  게임 테스트 종료");
 		sc.close();
