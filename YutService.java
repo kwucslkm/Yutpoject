@@ -9,9 +9,18 @@ public class YutService {
 	Random rd = new Random();// 랜덤 객체 생성
 	int poCntA = 0; // A누적 점수
 	int poCntB = 0; // B누적 점수
+	public void ShowResult() {
+		
+		Map<Integer, ProjectYDTO> prDTO = prepository.remap();
+		
+	}
 	public void clearScreen(int line) {
 		for (int i = 0; i < line; i++)
 			System.out.println("");
+	}
+	public void clearSpace(int line) {
+		for (int i = 0; i < line; i++)
+			System.out.print(" ");
 	}
 	public void firstShowroad() {
 		clearScreen(80);
@@ -33,7 +42,7 @@ public class YutService {
 		int sumPositionCnt = 0; // 누적점수
 		int retryChk = 0; // 다시 윷 던지기 변수
 		String nowMal = "";//
-		System.out.println(" _______________________________YUT GAME !!_______________________________\n");
+		System.out.println(" _____________________________YUT GAME !!_____________________________\n");
 		clearScreen(1);
 		for (int i = 0; i < 4; i++) {
 			if (rd.nextInt(2) == 1) {
@@ -69,23 +78,26 @@ public class YutService {
 		else {
 			proYDTO.setRetryChkno(retryChk);
 		}
-		// 나중에 데스로드에서 잡힐 경우 DTO 에 누적값을 0으로 만드는 로직 추가 에정
+		// 
 		sumPositionCnt = PositionSumCnt(nowPositionCnt, player);
 		proYDTO.setSumPositionCnt(sumPositionCnt);// DTO 에 누적카운트값 저장
 		prepository.save(proYDTO);// 맵리스트에 윷 한 번 던졌을때의 값들을 저장
-//
+//		System.out.println("   현재 A의 위치는 " + poCntA + "입니다.");
+//		System.out.println("   현재 B의 위치는 " + poCntB + "입니다.\n");
 		System.out.println("\n  " + nowyutCnt + " " + "참가자 " + player + "님" + nowMal);// 현재윷 던진 결과값을 출력
 		System.out.println("  " + player + " 님 위치 점수는 -> " + sumPositionCnt + " 입니다.");
 //
 		YboardRows(proYDTO);
+		System.out.println("   현재 A의 위치는 " + poCntA + "입니다.");
+		System.out.println("   현재 B의 위치는 " + poCntB + "입니다.\n");
 		System.out.println(proYDTO);
 		return proYDTO;
 	}
 	public ProjectYDTO YboardRows(ProjectYDTO proYDTO) {
 		String boardO = " o ";
-		String boardA = "\u001B[32m 'A' \u001B[0m";
-		String boardB = "\u001B[33m 'B' \u001B[0m";
-		String boardAB = " 'A B'";
+		String boardA = "\u001B[32m (A) \u001B[0m";
+		String boardB = "\u001B[33m (B) \u001B[0m";
+		String boardAB = "\u001B[32m (A\u001B[0m \u001B[33mB) \u001B[0m";
 		Map<Integer, ProjectYDTO> prDTO = prepository.remap();
 		System.out.println("\n");
 		System.out.println("                             * Death Road *");
@@ -103,31 +115,27 @@ public class YutService {
 				}
 				catchM = 1;
 				System.out.print(boardAB);
-			} else if (poCntB < poCntA && i == poCntB) {
+			} else if (poCntB < poCntA && i == poCntB&&i!=goalNum) {
 				System.out.print(boardB);
-			} else if (poCntB < poCntA && i == poCntA) {
+			} else if (poCntB < poCntA && i == poCntA&&i!=goalNum) {
 				System.out.print(boardA);
-			} else if (poCntB > poCntA && i == poCntA) {
+			} else if (poCntB > poCntA && i == poCntA&&i!=goalNum) {
 				System.out.print(boardA);
-			} else if (poCntB > poCntA && i == poCntB) {
+			} else if (poCntB > poCntA && i == poCntB&&i!=goalNum) {
 				System.out.print(boardB);
-			} else if(i==20) {
-				if(poCntA>=goalNum) {
-					System.out.print(boardA);
-					System.out.println();
-				}else if(poCntB>=goalNum) {
-					System.out.print(boardB);
-					System.out.println();
-				}else {
-					System.out.print("  GOAL!\n");
+			} else if (i == goalNum) {
+				if (poCntA >= goalNum) {
+					System.out.print("\u001B[32m (A Goal!!) \u001B[0m");
+				} else if (poCntB >= goalNum) {
+					System.out.print("\u001B[33m (B Goal!!) \u001B[0m");
+				} else {
+					System.out.print("  GOAL!");
 				}
-				
 			} else {
 				System.out.print(boardO);
 			}
-				
 		}
-//		System.out.print("  GOAL!\n");
+		
 		prepository.deathroad1();// 데스로드 호출
 		if (catchM == 1) {
 			System.out.println("   앗 " + proYDTO.getPlayer() + " 님 잡았습니다. 한번더");
@@ -136,4 +144,13 @@ public class YutService {
 		System.out.println();
 		return proYDTO;
 	}
+	public void StartYut1() {
+		for (int i = 0; i < 4; i++) {
+			clearSpace(26);
+			System.out.println(" _______________");
+			clearSpace(26);
+			System.out.println("|___X___X___X___|");
+		}
+	}
+	
 }
